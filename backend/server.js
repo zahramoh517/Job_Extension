@@ -25,6 +25,16 @@ app.get('/', (req, res) => {
 
 // Start the server and listen for requests
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);  // Logs a message in the terminal when the server starts
+    console.log(`Server running on port ${PORT}`);  // logs a message in the terminal when the server starts
 });
 
+app.post('/receive-emails', (req, res) => {
+    const emailData = req.body; // get the list of emails sent from the Chrome extension
+
+    if (!emailData || !Array.isArray(emailData)) {
+        return res.status(400).json({ message: "Invalid email data format" });
+    }
+
+    console.log("Received email metadata:", emailData); // Log it for now
+    res.json({ message: "Email metadata received successfully", data: emailData });
+});
